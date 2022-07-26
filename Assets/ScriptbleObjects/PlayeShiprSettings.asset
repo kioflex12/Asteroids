@@ -10,8 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e871da14fd31a7d45a818259ef1cc220, type: 3}
-  m_Name: PlayerSettings
+  m_Name: PlayeShiprSettings
   m_EditorClassIdentifier: 
-  RotationSpeed: 0
-  MoveSpeedLimit: 0
-  InertionDamping: 0
+  RotationSpeed: 100
+  MoveSpeedLimit: 3
+  InertionDamping: 0.99
+  GasForce: 0.1
+  StopForce: -2

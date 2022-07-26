@@ -5,13 +5,15 @@ namespace Core.Gameplay.Player
 {
     public class PlayerShip : MonoBehaviour
     {
-        private  InputController    _inputController;
-        private  MovementController _movementController;
+        private  InputController          _inputController;
+        private  MovementController       _movementController;
+        private  BoundsMovementController _boundsMovementController;
 
-        public void Init(InputController inputController, MovementController movementController)
+        public void Init(InputController inputController, MovementController movementController, BoundsMovementController boundsMovementController)
         {
-            _inputController = inputController;
-            _movementController = movementController;
+            _inputController          = inputController;
+            _movementController       = movementController;
+            _boundsMovementController = boundsMovementController;
         }
 
         private void Update()
@@ -21,7 +23,8 @@ namespace Core.Gameplay.Player
 
         private void Move()
         {
-            _movementController.Move(transform,_inputController.Direction);
+            transform.position = _boundsMovementController.TryMoveToOppositeSide(transform.position);
+            _movementController.Move(transform, _inputController.Direction);
         }
 
         public void Deinit()

@@ -7,34 +7,32 @@ namespace Starter
 {
     public sealed class Starter : MonoBehaviour
     {
-        [SerializeField] private PlayerShip _playerShip;
+        [SerializeField] private PlayerShip             _playerShip;
+        [SerializeField] private Camera                 _camera;
+        [SerializeField] private ShipPlayerSettings     _shipPlayerSettings;
 
-        public MovementController MovementController { get; private set; }
-        public PlayerInputActions PlayerInputActions { get; private set; }
-        public InputController    InputController    { get; private set; }
+        public MovementController         MovementController        { get; private set; }
+        public PlayerInputActions          PlayerInputActions       { get; private set; }
+        public InputController             InputController          { get; private set; }
+        public BoundsMovementController    BoundsMovementController { get; private set; }
 
         private void Reset()
         {
             _playerShip = FindObjectOfType<PlayerShip>();
+            _camera = FindObjectOfType<Camera>();
         }
 
         private void Awake()
         {
-            var playerSettings = GetPlayerSettings();
-            if (!playerSettings)
-            {
-                Debug.LogError("Can`t find PlayerSetting.asset");
-                return;
-            }
+            MovementController       = new MovementController(_shipPlayerSettings);
+            PlayerInputActions       = new PlayerInputActions();
+            InputController          = new InputController(PlayerInputActions);
+            BoundsMovementController = new BoundsMovementController(_camera);
 
-            MovementController = new MovementController(playerSettings);
-            PlayerInputActions = new PlayerInputActions();
-            InputController    = new InputController(PlayerInputActions);
             PlayerInputActions.Enable();
-            _playerShip.Init(InputController,MovementController);
+            _playerShip.Init(InputController,MovementController,BoundsMovementController);
         }
 
-        private ShipPlayerSettings GetPlayerSettings() => Resources.Load<ShipPlayerSettings>("PlayerSettings");
 
         private void OnDestroy()
         {
