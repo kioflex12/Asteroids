@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Core.Gameplay.Player
 {
-    public class PlayerShip : MonoBehaviour
+    public sealed class PlayerShip : MonoBehaviour
     {
         private  InputController          _inputController;
         private  MovementController       _movementController;
@@ -18,13 +18,32 @@ namespace Core.Gameplay.Player
 
         private void Update()
         {
-            Move();
+            TryMove();
+            TryRotate();
         }
 
-        private void Move()
+        private void TryMove()
         {
+            var inertialDirection = _movementController.GetInertialDirection(transform.rotation, _inputController.Direction);
+
+            if (inertialDirection == Vector3.zero)
+            {
+                return;
+            }
+
             transform.position = _boundsMovementController.TryMoveToOppositeSide(transform.position);
-            _movementController.Move(transform, _inputController.Direction);
+            transform.Translate(inertialDirection, Space.World);
+        }
+
+        private void TryRotate()
+        {
+            if (_inputController.Direction.x == 0)
+            {
+                return;
+            }
+
+            var rotationVector = _movementController.GetRotationVector();
+            transform.Rotate(rotationVector, -_inputController.Direction.x);
         }
 
         public void Deinit()
