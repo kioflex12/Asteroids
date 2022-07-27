@@ -7,7 +7,7 @@ namespace Core.Gameplay.Controllers
         private readonly ShipPlayerSettings _playerSettings;
 
         private Vector3 _inertial;
-        private float _gas;
+        private float _speed;
 
         public MovementController(ShipPlayerSettings playerSettings)
         {
@@ -18,17 +18,17 @@ namespace Core.Gameplay.Controllers
         {
             if (direction.y >= 0)
             {
-                _gas = Mathf.Clamp( _gas + (direction.y > 0 ? direction.y : _playerSettings.StopForce) * _playerSettings.GasForce * Time.fixedDeltaTime, 0 , 1.5f);
+                _speed = Mathf.Clamp( _speed + (direction.y > 0 ? direction.y : _playerSettings.StopForce) * _playerSettings.GasForce * Time.fixedDeltaTime,
+                    0 ,
+                    _playerSettings.SpeedLimit);
 
-                _inertial += rotation * Vector3.up * _gas * Time.deltaTime;
+                _inertial += rotation * Vector3.up * _speed * Time.deltaTime;
                 _inertial = Vector2.ClampMagnitude(_inertial, _playerSettings.MoveSpeedLimit);
                 _inertial *= _playerSettings.InertionDamping;
             }
             return _inertial;
         }
 
-        public Vector3 GetRotationVector() => Vector3.forward * _playerSettings.RotationSpeed;
-
-
+        public Vector3 GetRotationVector(float xDirection) => Vector3.forward * _playerSettings.RotationSpeed * -xDirection;
     }
 }

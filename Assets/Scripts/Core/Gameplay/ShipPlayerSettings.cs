@@ -10,6 +10,7 @@ namespace Core.Gameplay
         public float InertionDamping;
         public float GasForce ;
         public float StopForce;
+        public float SpeedLimit;
     }
 }
 

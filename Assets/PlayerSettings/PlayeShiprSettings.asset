@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e871da14fd31a7d45a818259ef1cc220, type: 3}
   m_Name: PlayeShiprSettings
   m_EditorClassIdentifier: 
-  RotationSpeed: 100
+  RotationSpeed: 1
   MoveSpeedLimit: 3
   InertionDamping: 0.99
   GasForce: 0.1
   StopForce: -2
+  SpeedLimit: 1.5

@@ -42,8 +42,8 @@ namespace Core.Gameplay.Player
                 return;
             }
 
-            var rotationVector = _movementController.GetRotationVector();
-            transform.Rotate(rotationVector, -_inputController.Direction.x);
+            var rotationVector = _movementController.GetRotationVector(_inputController.Direction.x);
+            transform.Rotate(rotationVector);
         }
 
         public void Deinit()
