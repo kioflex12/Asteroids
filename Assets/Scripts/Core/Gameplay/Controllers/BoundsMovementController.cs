@@ -4,8 +4,8 @@ namespace Core.Gameplay.Controllers
 {
     public sealed class BoundsMovementController
     {
-        private Vector2 _lowerLeftCameraBound;
-        private Vector2 _upperRightCameraBound;
+        private readonly Vector2 _lowerLeftCameraBound;
+        private readonly Vector2 _upperRightCameraBound;
 
         public BoundsMovementController(Camera camera)
         {

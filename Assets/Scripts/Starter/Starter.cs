@@ -11,7 +11,7 @@ namespace Starter
         [SerializeField] private Camera                 _camera;
         [SerializeField] private ShipPlayerSettings     _shipPlayerSettings;
 
-        public MovementController         MovementController        { get; private set; }
+        public MovementController          MovementController       { get; private set; }
         public PlayerInputActions          PlayerInputActions       { get; private set; }
         public InputController             InputController          { get; private set; }
         public BoundsMovementController    BoundsMovementController { get; private set; }
