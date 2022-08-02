@@ -24,8 +24,8 @@ namespace Starter
 
         private void Awake()
         {
-            MovementController       = new MovementController(_shipPlayerSettings);
             PlayerInputActions       = new PlayerInputActions();
+            MovementController       = new MovementController(_shipPlayerSettings);
             InputController          = new InputController(PlayerInputActions);
             BoundsMovementController = new BoundsMovementController(_camera);
 

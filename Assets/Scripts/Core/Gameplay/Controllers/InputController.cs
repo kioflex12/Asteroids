@@ -5,22 +5,21 @@ namespace Core.Gameplay.Controllers
 {
     public sealed class InputController
     {
-        private readonly PlayerInputActions PlayerInputActions;
+        private readonly PlayerInputActions _playerInputActions;
 
         public Vector2 Direction { get; private set; }
 
         public InputController(PlayerInputActions playerInputActions)
         {
-            PlayerInputActions = playerInputActions;
+            _playerInputActions = playerInputActions;
             Init();
-
         }
 
         private void Init()
         {
-            PlayerInputActions.Player.Move.performed += Move;
-            PlayerInputActions.Player.Move.canceled  += Stop;
-            PlayerInputActions.Player.Fire.performed += Fire;
+            _playerInputActions.Player.Move.performed += Move;
+            _playerInputActions.Player.Move.canceled  += Stop;
+            _playerInputActions.Player.Fire.performed += Fire;
         }
 
         private void Fire(InputAction.CallbackContext context)
@@ -40,9 +39,9 @@ namespace Core.Gameplay.Controllers
 
         public void Deinit()
         {
-            PlayerInputActions.Player.Move.performed -= Move;
-            PlayerInputActions.Player.Move.canceled  -= Stop;
-            PlayerInputActions.Player.Fire.performed -= Fire;
+            _playerInputActions.Player.Move.performed -= Move;
+            _playerInputActions.Player.Move.canceled  -= Stop;
+            _playerInputActions.Player.Fire.performed -= Fire;
         }
     }
 }
