@@ -16,16 +16,13 @@ namespace Core.Gameplay.Controllers
 
         public Vector3 GetInertialDirection(Quaternion rotation, Vector2 direction)
         {
-            if (direction.y >= 0)
-            {
-                _speed = Mathf.Clamp( _speed + (direction.y > 0 ? direction.y : _playerSettings.StopForce) * _playerSettings.GasForce * Time.fixedDeltaTime,
-                    0 ,
-                    _playerSettings.SpeedLimit);
+            _speed = Mathf.Clamp( _speed + (direction.y > 0 ? direction.y : _playerSettings.StopForce) * _playerSettings.GasForce * Time.fixedDeltaTime,
+                0 ,
+                _playerSettings.SpeedLimit);
 
-                _inertial += rotation * Vector3.up * _speed * Time.deltaTime;
-                _inertial = Vector2.ClampMagnitude(_inertial, _playerSettings.MoveSpeedLimit);
-                _inertial *= _playerSettings.InertionDamping;
-            }
+            _inertial += rotation * Vector3.up * _speed * Time.deltaTime;
+            _inertial = Vector2.ClampMagnitude(_inertial, _playerSettings.MoveSpeedLimit);
+            _inertial *= _playerSettings.InertionDamping;
             return _inertial;
         }
 
