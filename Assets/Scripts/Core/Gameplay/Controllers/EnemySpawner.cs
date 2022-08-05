@@ -26,9 +26,11 @@ namespace Core.Gameplay.Controllers
 
         public EnemySpawner(Camera camera, EnemiesData enemiesData)
         {
-            _camera = camera;
+            _camera      = camera;
             _enemiesData = enemiesData;
+
             _timer = new CustomTimer(enemiesData.SpawnCooldown);
+
             EventManager.Subscribe<EnemyDead>(this, OnEnemyDead);
         }
 
@@ -86,6 +88,11 @@ namespace Core.Gameplay.Controllers
                 _spawnedFlyingSaucerCount--;
                 Debug.LogError(_spawnedFlyingSaucerCount);
             }
+        }
+
+        public void Deinit()
+        {
+            EventManager.Unsubscribe<EnemyDead>(OnEnemyDead);
         }
     }
 }

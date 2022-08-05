@@ -5,7 +5,7 @@ namespace Utils
 {
     public sealed class EventManager : SingleInstance<EventManager>
     {
-        readonly Dictionary<Type, HandlerBase> _handlers = new Dictionary<Type, HandlerBase>(100);
+        private readonly Dictionary<Type, HandlerBase> _handlers = new Dictionary<Type, HandlerBase>(100);
 
         public static void Subscribe<T>(object watcher, Action<T> action) where T: struct
         {

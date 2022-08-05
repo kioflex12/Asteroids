@@ -44,6 +44,7 @@ namespace Starter
         {
             _playerShip.Deinit();
             InputController.Deinit();
+            EnemySpawner.Deinit();
         }
     }
 }

@@ -76,7 +76,7 @@ namespace Utils
 				}
 				try {
 					current.Invoke(arg);
-				} catch ( Exception e ) {
+				} catch ( Exception) {
 					Debug.LogError(new Exception("Event Calback Expetion"));
 				}
 			}
