@@ -5,15 +5,13 @@ namespace Core.Gameplay.Player
 {
     public sealed class PlayerShip : MonoBehaviour
     {
-        private  InputController          _inputController;
-        private  MovementController       _movementController;
-        private  BoundsMovementController _boundsMovementController;
+        private  InputController    _inputController;
+        private  MovementController _movementController;
 
-        public void Init(InputController inputController, MovementController movementController, BoundsMovementController boundsMovementController)
+        public void Init(InputController inputController, MovementController movementController)
         {
-            _inputController          = inputController;
-            _movementController       = movementController;
-            _boundsMovementController = boundsMovementController;
+            _inputController    = inputController;
+            _movementController = movementController;
         }
 
         private void Update()
@@ -24,15 +22,7 @@ namespace Core.Gameplay.Player
 
         private void TryMove()
         {
-            var inertialDirection = _movementController.GetInertialDirection(transform.rotation, _inputController.Direction);
-
-            if (inertialDirection == Vector3.zero)
-            {
-                return;
-            }
-
-            transform.position = _boundsMovementController.TryMoveToOppositeSide(transform.position);
-            transform.Translate(inertialDirection, Space.World);
+            _movementController.TryMove(transform, _inputController.Direction);
         }
 
         private void TryRotate()
