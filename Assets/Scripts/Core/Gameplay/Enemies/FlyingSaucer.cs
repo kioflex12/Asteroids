@@ -8,5 +8,9 @@ namespace Core.Gameplay.Enemies
         {
         }
 
+        private void OnDestroy()
+        {
+            EventManager.Fire(new EnemyDead(this));
+        }
     }
 }

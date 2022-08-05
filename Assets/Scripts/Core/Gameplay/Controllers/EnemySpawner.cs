@@ -29,6 +29,7 @@ namespace Core.Gameplay.Controllers
             _camera = camera;
             _enemiesData = enemiesData;
             _timer = new CustomTimer(enemiesData.SpawnCooldown);
+            EventManager.Subscribe<EnemyDead>(this, OnEnemyDead);
         }
 
         public void OnStart()
@@ -78,6 +79,13 @@ namespace Core.Gameplay.Controllers
             spawnedEnemy.InitInternal();
         }
 
+        private void OnEnemyDead(EnemyDead enemyDead)
+        {
+            if (enemyDead.EnemyType is FlyingSaucer)
+            {
+                _spawnedFlyingSaucerCount--;
+                Debug.LogError(_spawnedFlyingSaucerCount);
+            }
         }
     }
 }

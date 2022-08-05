@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Core.Gameplay
 {
-    [CreateAssetMenu(fileName = "PlayerSettings", menuName = "SettingAsset/PlayerSettings", order = 1)]
+    [CreateAssetMenu(fileName = "GameSettings", menuName = "SettingAsset/PlayerSettings", order = 1)]
     public sealed class ShipPlayerSettings : ScriptableObject
     {
         public float RotationSpeed;
