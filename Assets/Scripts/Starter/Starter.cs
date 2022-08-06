@@ -14,7 +14,7 @@ namespace Starter
         [SerializeField] private EnemiesData            _enemiesData;
         [SerializeField] private EnemyManager           _enemyManager;
 
-        public MovementController          MovementController       { get; private set; }
+        public PlayerMovementController          PlayerMovementController       { get; private set; }
         public PlayerInputActions          PlayerInputActions       { get; private set; }
         public InputController             InputController          { get; private set; }
         public BoundsMovementController    BoundsMovementController { get; private set; }
@@ -29,13 +29,13 @@ namespace Starter
         private void Awake()
         {
             PlayerInputActions       = new PlayerInputActions();
-            MovementController       = new MovementController(_shipPlayerSettings, BoundsMovementController);
-            InputController          = new InputController(PlayerInputActions);
             BoundsMovementController = new BoundsMovementController(_camera);
+            PlayerMovementController = new PlayerMovementController(_shipPlayerSettings, BoundsMovementController);
+            InputController          = new InputController(PlayerInputActions);
             EnemySpawner             = new EnemySpawner(_camera, _enemiesData);
 
             PlayerInputActions.Enable();
-            _playerShip.Init(InputController, MovementController);
+            _playerShip.Init(InputController, PlayerMovementController);
             _enemyManager.Init(EnemySpawner);
         }
 

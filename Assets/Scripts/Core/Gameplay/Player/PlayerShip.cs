@@ -6,12 +6,12 @@ namespace Core.Gameplay.Player
     public sealed class PlayerShip : MonoBehaviour
     {
         private  InputController    _inputController;
-        private  MovementController _movementController;
+        private  PlayerMovementController _playerMovementController;
 
-        public void Init(InputController inputController, MovementController movementController)
+        public void Init(InputController inputController, PlayerMovementController playerMovementController)
         {
-            _inputController    = inputController;
-            _movementController = movementController;
+            _inputController          = inputController;
+            _playerMovementController = playerMovementController;
         }
 
         private void Update()
@@ -22,24 +22,18 @@ namespace Core.Gameplay.Player
 
         private void TryMove()
         {
-            _movementController.TryMove(transform, _inputController.Direction);
+            _playerMovementController.TryMove(transform, _inputController.Direction);
         }
 
         private void TryRotate()
         {
-            if (_inputController.Direction.x == 0)
-            {
-                return;
-            }
-
-            var rotationVector = _movementController.GetRotationVector(_inputController.Direction.x);
-            transform.Rotate(rotationVector);
+           _playerMovementController.TryRotate(transform, _inputController.Direction);
         }
 
         public void Deinit()
         {
             _inputController = null;
-            _movementController = null;
+            _playerMovementController = null;
         }
     }
 }

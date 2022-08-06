@@ -7,13 +7,9 @@ namespace Core.Gameplay.Controllers
 {
     public sealed class EnemySpawner
     {
-        private readonly Camera _camera;
-        private EnemiesData _enemiesData;
-        private CustomTimer _timer;
-
-
-        private int _spawnedFlyingSaucerCount;
-
+        private readonly Camera      _camera;
+        private readonly EnemiesData _enemiesData;
+        private readonly CustomTimer _timer;
 
         private readonly Vector2[] _coordsArray =
         {
@@ -23,6 +19,7 @@ namespace Core.Gameplay.Controllers
             new(1, 1),
         };
 
+        private int _spawnedFlyingSaucerCount;
 
         public EnemySpawner(Camera camera, EnemiesData enemiesData)
         {
@@ -86,7 +83,6 @@ namespace Core.Gameplay.Controllers
             if (enemyDead.EnemyType is FlyingSaucer)
             {
                 _spawnedFlyingSaucerCount--;
-                Debug.LogError(_spawnedFlyingSaucerCount);
             }
         }
 

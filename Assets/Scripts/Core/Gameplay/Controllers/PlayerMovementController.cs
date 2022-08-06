@@ -2,7 +2,7 @@
 
 namespace Core.Gameplay.Controllers
 {
-    public sealed class MovementController
+    public sealed class PlayerMovementController : BaseMovementController
     {
         private readonly ShipPlayerSettings _playerSettings;
         private readonly BoundsMovementController _boundsMovementController;
@@ -10,7 +10,7 @@ namespace Core.Gameplay.Controllers
         private Vector3 _inertial;
         private float _speed;
 
-        public MovementController(ShipPlayerSettings playerSettings, BoundsMovementController boundsMovementController)
+        public PlayerMovementController(ShipPlayerSettings playerSettings, BoundsMovementController boundsMovementController)
         {
             _playerSettings           = playerSettings;
             _boundsMovementController = boundsMovementController;
@@ -28,9 +28,17 @@ namespace Core.Gameplay.Controllers
             return _inertial;
         }
 
-        public Vector3 GetRotationVector(float xDirection) => Vector3.forward * _playerSettings.RotationSpeed * -xDirection;
+        public override void TryRotate(Transform transform, Vector2 direction)
+        {
+            if (direction.x == 0)
+            {
+                return;
+            }
 
-        public void TryMove(Transform transform, Vector2 direction)
+            transform.Rotate(Vector3.forward * _playerSettings.RotationSpeed * -direction.x);
+        }
+
+        public override void TryMove(Transform transform, Vector2 direction)
         {
             var inertialDirection = GetInertialDirection(transform.rotation, direction);
 
