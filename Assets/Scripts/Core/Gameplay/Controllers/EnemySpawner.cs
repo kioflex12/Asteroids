@@ -7,9 +7,11 @@ namespace Core.Gameplay.Controllers
 {
     public sealed class EnemySpawner
     {
-        private readonly Camera      _camera;
-        private readonly EnemiesData _enemiesData;
-        private readonly CustomTimer _timer;
+        private readonly Camera                         _camera;
+        private readonly EnemiesData                    _enemiesData;
+        private readonly AsteroidsMovementController    _asteroidsMovementController;
+        private readonly FlyingSaucerMovementController _flyingSaucerMovementController;
+        private readonly CustomTimer                    _timer;
 
         private readonly Vector2[] _coordsArray =
         {
@@ -21,17 +23,19 @@ namespace Core.Gameplay.Controllers
 
         private int _spawnedFlyingSaucerCount;
 
-        public EnemySpawner(Camera camera, EnemiesData enemiesData)
+        public EnemySpawner(Camera camera, EnemiesData enemiesData, AsteroidsMovementController asteroidsMovementController, FlyingSaucerMovementController flyingSaucerMovementController)
         {
-            _camera      = camera;
-            _enemiesData = enemiesData;
+            _camera                         = camera;
+            _enemiesData                    = enemiesData;
+            _asteroidsMovementController    = asteroidsMovementController;
+            _flyingSaucerMovementController = flyingSaucerMovementController;
 
             _timer = new CustomTimer(enemiesData.SpawnCooldown);
 
             EventManager.Subscribe<EnemyDead>(this, OnEnemyDead);
         }
 
-        public void OnStart()
+        public void Init()
         {
             for (var i = 0; i < _enemiesData.AsteroidsStartCount; i++)
             {
@@ -67,15 +71,30 @@ namespace Core.Gameplay.Controllers
             {
                 position = new Vector3(Random.Range(0f, startCoord.x), Random.Range(0f, startCoord.y));
             }
-
-            return _camera.ViewportToWorldPoint(position);
+            position = _camera.ViewportToWorldPoint(position);
+            return new Vector3(position.x, position.y, 0f);
         }
 
         private void Spawn(Enemy enemy)
         {
             var spawnPosition = GetRandomSpawnPosition();
             var spawnedEnemy = Object.Instantiate(enemy, spawnPosition, Quaternion.identity);
-            spawnedEnemy.InitInternal();
+
+            BaseMovementController movementController;
+            switch (spawnedEnemy)
+            {
+                case Asteroid:
+                    movementController = _asteroidsMovementController;
+                    break;
+                case FlyingSaucer:
+                    movementController = _flyingSaucerMovementController;
+                    break;
+                default:
+                    Debug.LogError($"Can`t init spawned enemy, unknown type enemy :{enemy}");
+                    return;
+            }
+
+            spawnedEnemy.InitInternal(movementController);
         }
 
         private void OnEnemyDead(EnemyDead enemyDead)

@@ -10,7 +10,7 @@ namespace Core.Gameplay.Managers
         public void Init( EnemySpawner enemySpawner)
         {
             _enemySpawner = enemySpawner;
-            _enemySpawner.OnStart();
+            _enemySpawner.Init();
         }
 
         private void Update()

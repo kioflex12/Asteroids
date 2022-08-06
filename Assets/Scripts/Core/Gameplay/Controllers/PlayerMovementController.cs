@@ -4,16 +4,18 @@ namespace Core.Gameplay.Controllers
 {
     public sealed class PlayerMovementController : BaseMovementController
     {
-        private readonly ShipPlayerSettings _playerSettings;
+        private readonly ShipPlayerSettings       _playerSettings;
         private readonly BoundsMovementController _boundsMovementController;
+        private readonly InputController          _inputController;
 
         private Vector3 _inertial;
         private float _speed;
 
-        public PlayerMovementController(ShipPlayerSettings playerSettings, BoundsMovementController boundsMovementController)
+        public PlayerMovementController(ShipPlayerSettings playerSettings, BoundsMovementController boundsMovementController, InputController inputController)
         {
             _playerSettings           = playerSettings;
             _boundsMovementController = boundsMovementController;
+            _inputController          = inputController;
         }
 
         private Vector3 GetInertialDirection(Quaternion rotation, Vector2 direction)
@@ -28,19 +30,19 @@ namespace Core.Gameplay.Controllers
             return _inertial;
         }
 
-        public override void TryRotate(Transform transform, Vector2 direction)
+        public override void TryRotate(Transform transform)
         {
-            if (direction.x == 0)
+            if (_inputController.Direction.x == 0)
             {
                 return;
             }
 
-            transform.Rotate(Vector3.forward * _playerSettings.RotationSpeed * -direction.x);
+            transform.Rotate(Vector3.forward * _playerSettings.RotationSpeed * -_inputController.Direction.x);
         }
 
-        public override void TryMove(Transform transform, Vector2 direction)
+        public override void TryMove(Transform transform)
         {
-            var inertialDirection = GetInertialDirection(transform.rotation, direction);
+            var inertialDirection = GetInertialDirection(transform.rotation, _inputController.Direction);
 
             if (inertialDirection == Vector3.zero)
             {

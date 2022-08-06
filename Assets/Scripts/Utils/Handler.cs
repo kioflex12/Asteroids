@@ -22,7 +22,7 @@ namespace Utils
 			}
 			else
 			{
-				Debug.LogError( $"{{watcher}} tries to subscribe to {action} again.");
+				Debug.LogError( $"{watcher} tries to subscribe to {action} again.");
 			}
 		}
 
@@ -74,9 +74,11 @@ namespace Utils
 				{
 					continue;
 				}
-				try {
+				try
+				{
 					current.Invoke(arg);
-				} catch ( Exception) {
+				} catch ( Exception)
+				{
 					Debug.LogError(new Exception("Event Calback Expetion"));
 				}
 			}

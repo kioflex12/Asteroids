@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6269cb457508bc6418b727f36bef842a, type: 3}
   m_Name: EnemiesSettings
   m_EditorClassIdentifier: 
-  SpawnCooldown: 1
+  SpawnCooldown: 10
   AsteroidPrefab: {fileID: 7171931644683164836, guid: ecd8bbdc0a4322e4cbaa98961e3a8327, type: 3}
-  AsteroidsStartCount: 15
+  AsteroidsStartCount: 10
   AsteroidsMoveSpeed: 0.05
   FlyingSaucerPrefab: {fileID: 1451491321846247344, guid: 6ab4a9f6beb4ac44b9a7161817d10185, type: 3}
   FlyingSauserMaxCount: 2

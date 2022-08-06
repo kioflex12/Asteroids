@@ -1,7 +1,7 @@
 using Core.Gameplay.Enemies;
 using UnityEngine;
 
-namespace Core.Gameplay
+namespace Utils
 {
     [CreateAssetMenu(fileName = "GameSettings", menuName = "SettingAsset/EnemiesSettings", order = 1)]
 

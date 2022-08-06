@@ -3,6 +3,7 @@ using Core.Gameplay.Controllers;
 using Core.Gameplay.Managers;
 using Core.Gameplay.Player;
 using UnityEngine;
+using Utils;
 
 namespace Starter
 {
@@ -14,11 +15,13 @@ namespace Starter
         [SerializeField] private EnemiesData            _enemiesData;
         [SerializeField] private EnemyManager           _enemyManager;
 
-        public PlayerMovementController          PlayerMovementController       { get; private set; }
-        public PlayerInputActions          PlayerInputActions       { get; private set; }
-        public InputController             InputController          { get; private set; }
-        public BoundsMovementController    BoundsMovementController { get; private set; }
-        public EnemySpawner                EnemySpawner             { get; private set; }
+        public PlayerMovementController    PlayerMovementController    { get; private set; }
+        public AsteroidsMovementController AsteroidsMovementController { get; private set; }
+        public FlyingSaucerMovementController FlyingSaucerMovementController { get; private set; }
+        public PlayerInputActions          PlayerInputActions          { get; private set; }
+        public InputController             InputController             { get; private set; }
+        public BoundsMovementController    BoundsMovementController    { get; private set; }
+        public EnemySpawner                EnemySpawner                { get; private set; }
 
         private void Reset()
         {
@@ -28,14 +31,16 @@ namespace Starter
 
         private void Awake()
         {
-            PlayerInputActions       = new PlayerInputActions();
-            BoundsMovementController = new BoundsMovementController(_camera);
-            PlayerMovementController = new PlayerMovementController(_shipPlayerSettings, BoundsMovementController);
-            InputController          = new InputController(PlayerInputActions);
-            EnemySpawner             = new EnemySpawner(_camera, _enemiesData);
+            PlayerInputActions             = new PlayerInputActions();
+            InputController                = new InputController(PlayerInputActions);
+            BoundsMovementController       = new BoundsMovementController(_camera);
+            PlayerMovementController       = new PlayerMovementController(_shipPlayerSettings, BoundsMovementController, InputController);
+            AsteroidsMovementController    = new AsteroidsMovementController(_enemiesData, BoundsMovementController);
+            FlyingSaucerMovementController = new FlyingSaucerMovementController(_enemiesData, _playerShip, BoundsMovementController);
+            EnemySpawner                   = new EnemySpawner(_camera, _enemiesData, AsteroidsMovementController, FlyingSaucerMovementController);
 
             PlayerInputActions.Enable();
-            _playerShip.Init(InputController, PlayerMovementController);
+            _playerShip.Init(PlayerMovementController);
             _enemyManager.Init(EnemySpawner);
         }
 
