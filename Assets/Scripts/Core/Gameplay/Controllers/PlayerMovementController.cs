@@ -21,7 +21,7 @@ namespace Core.Gameplay.Controllers
 
         private Vector3 GetInertialDirection(Quaternion rotation, Vector2 direction)
         {
-            Speed = Mathf.Clamp( Speed + (direction.y > 0 ? direction.y : _playerSettings.StopForce) * _playerSettings.GasForce * Time.fixedDeltaTime,
+            Speed = Mathf.Clamp( Speed + (direction.y > 0 ?  _playerSettings.GasForce : _playerSettings.StopForce)  * Time.fixedDeltaTime,
                 0 ,
                 _playerSettings.SpeedLimit);
 
