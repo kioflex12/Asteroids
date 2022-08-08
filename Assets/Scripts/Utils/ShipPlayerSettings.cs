@@ -11,6 +11,9 @@ namespace Core.Gameplay
         public float GasForce ;
         public float StopForce;
         public float SpeedLimit;
+        public Bullet BulletPrefab;
+        public float BulletSpeed;
+        public float BulletShootCooldown;
     }
 }
 

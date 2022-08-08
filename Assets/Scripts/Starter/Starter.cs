@@ -22,6 +22,7 @@ namespace Starter
         public InputController             InputController             { get; private set; }
         public BoundsMovementController    BoundsMovementController    { get; private set; }
         public EnemySpawner                EnemySpawner                { get; private set; }
+        public PlayerWeaponController      PlayerWeaponController      { get; private set; }
 
         private void Reset()
         {
@@ -38,6 +39,7 @@ namespace Starter
             AsteroidsMovementController    = new AsteroidsMovementController(_enemiesData, BoundsMovementController);
             FlyingSaucerMovementController = new FlyingSaucerMovementController(_enemiesData, _playerShip, BoundsMovementController);
             EnemySpawner                   = new EnemySpawner(_camera, _enemiesData, AsteroidsMovementController, FlyingSaucerMovementController);
+            PlayerWeaponController         = new PlayerWeaponController(InputController, _playerShip, _shipPlayerSettings, PlayerMovementController);
 
             PlayerInputActions.Enable();
             _playerShip.Init(PlayerMovementController);
@@ -47,6 +49,7 @@ namespace Starter
 
         private void OnDestroy()
         {
+            PlayerWeaponController.Deinit();
             _playerShip.Deinit();
             InputController.Deinit();
             EnemySpawner.Deinit();

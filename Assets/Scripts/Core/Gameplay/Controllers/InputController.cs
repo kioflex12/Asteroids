@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 namespace Core.Gameplay.Controllers
@@ -6,6 +8,8 @@ namespace Core.Gameplay.Controllers
     public sealed class InputController
     {
         private readonly PlayerInputActions _playerInputActions;
+
+        public UnityAction OnFIre;
 
         public Vector2 Direction { get; private set; }
 
@@ -24,9 +28,10 @@ namespace Core.Gameplay.Controllers
 
         private void Fire(InputAction.CallbackContext context)
         {
-            Debug.Log("Fire!");
+            OnFIre?.Invoke();
         }
 
+        //TODO: change to event
         private void Move(InputAction.CallbackContext context)
         {
             Direction = context.ReadValue<Vector2>();

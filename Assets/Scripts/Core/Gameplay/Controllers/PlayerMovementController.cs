@@ -9,7 +9,8 @@ namespace Core.Gameplay.Controllers
         private readonly InputController          _inputController;
 
         private Vector3 _inertial;
-        private float _speed;
+
+        public float Speed { get; private set; }
 
         public PlayerMovementController(ShipPlayerSettings playerSettings, BoundsMovementController boundsMovementController, InputController inputController)
         {
@@ -20,11 +21,11 @@ namespace Core.Gameplay.Controllers
 
         private Vector3 GetInertialDirection(Quaternion rotation, Vector2 direction)
         {
-            _speed = Mathf.Clamp( _speed + (direction.y > 0 ? direction.y : _playerSettings.StopForce) * _playerSettings.GasForce * Time.fixedDeltaTime,
+            Speed = Mathf.Clamp( Speed + (direction.y > 0 ? direction.y : _playerSettings.StopForce) * _playerSettings.GasForce * Time.fixedDeltaTime,
                 0 ,
                 _playerSettings.SpeedLimit);
 
-            _inertial += rotation * Vector3.up * _speed * Time.deltaTime;
+            _inertial += rotation * Vector3.up * Speed * Time.deltaTime;
             _inertial = Vector2.ClampMagnitude(_inertial, _playerSettings.MoveSpeedLimit);
             _inertial *= _playerSettings.InertionDamping;
             return _inertial;
