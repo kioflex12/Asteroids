@@ -22,10 +22,5 @@ namespace Core.Gameplay.Enemies
         {
             _movementController.TryMove(transform);
         }
-
-        private void OnDestroy()
-        {
-            EventManager.Fire(new EnemyDead(this));
-        }
     }
 }

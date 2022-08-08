@@ -1,4 +1,5 @@
 ﻿using System;
+using Core.Gameplay.Enemies;
 using UnityEngine;
 
 namespace Core.Gameplay
@@ -26,7 +27,16 @@ namespace Core.Gameplay
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            // throw new NotImplementedException();
+            if (collision.TryGetComponent<Enemy>(out var enemy))
+            {
+                enemy.Dead();
+                Destroy(gameObject);
+            }
+        }
+
+        private void OnBecameInvisible()
+        {
+            Destroy(gameObject);
         }
     }
 }

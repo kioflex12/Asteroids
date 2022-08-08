@@ -15,6 +15,9 @@ MonoBehaviour:
   RotationSpeed: 1
   MoveSpeedLimit: 3
   InertionDamping: 0.99
-  GasForce: 0.1
+  GasForce: 0.05
   StopForce: -2
-  SpeedLimit: 1.5
+  SpeedLimit: 1
+  BulletPrefab: {fileID: 3922916750288081742, guid: 60bd1845c0e292f46b996d8a12a67c47, type: 3}
+  BulletSpeed: 200
+  BulletShootCooldown: 0.25

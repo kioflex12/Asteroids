@@ -1,5 +1,6 @@
 using Core.Gameplay.Controllers;
 using UnityEngine;
+using Utils;
 
 namespace Core.Gameplay.Enemies
 {
